@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "221703463837",
+    "firebase_url": "https://pennyfarthing-4679d.firebaseio.com",
+    "project_id": "pennyfarthing-4679d",
+    "storage_bucket": "pennyfarthing-4679d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221703463837:android:f4e9704031eda3d98f4574",
+        "android_client_info": {
+          "package_name": "com.example.pennyfarthing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221703463837-737e6b0fjtrh8g9ncfpegsl9ruj2t64n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pennyfarthing",
+            "certificate_hash": "09849edbc575eef068f6d5fc57e198f4d2ab5672"
+          }
+        },
+        {
+          "client_id": "221703463837-ntltf17ra44pithm1gap3c17if54fj98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnK2kfh9htBUsgwVMfq7PIRXFpCd8mUko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221703463837-ntltf17ra44pithm1gap3c17if54fj98.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
