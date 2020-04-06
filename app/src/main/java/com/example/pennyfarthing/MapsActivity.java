@@ -77,8 +77,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.d(TAG, "DocumentSnapshot data: " + P2long + " "+ P2lat);
                         P1 = new LatLng(P1lat, P1long);
                         P2 = new LatLng(P2lat,P2long);
-                        Log.d(TAG, "DocumentSnapshot data is here: " + P2long + " "+ P2lat);
-                        Log.d(TAG, "DocumentSnapshot data is here: " + P1long + " "+ P1lat);
+                        Log.d(TAG, "DocumentSnapshot data is here1: " + P2long + " "+ P2lat);
+                        Log.d(TAG, "DocumentSnapshot data is here2: " + P1long + " "+ P1lat);
                         mMap.addMarker(new MarkerOptions().position(P1).title("Your name starts with A"));
                         mMap.addMarker(new MarkerOptions().position(P2).title("Your name does not"));
 

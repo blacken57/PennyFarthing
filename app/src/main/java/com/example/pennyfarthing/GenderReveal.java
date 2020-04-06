@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -24,15 +25,36 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class GenderReveal extends Activity implements LocationListener {
-    private static final int REQUEST_LOCATION = 1;
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final String TAG ="ACTIVITY STUPENDOUS" ;
     Button yes, no;
     LocationManager locationManager;
     String latitude, longitude;
     TextView viws;
-    double longi = 20,lati = 120;
+    double longi = 120,lati = 20;
     FirebaseFirestore fStore;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
+    public void requestLocationPermission() {
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+        if(EasyPermissions.hasPermissions(this, perms)) {
+            Toast.makeText(this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,29 +72,23 @@ public class GenderReveal extends Activity implements LocationListener {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return;
+            Log.d(TAG, "No Permission Folks!" );
+            requestLocationPermission();
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Yes is clicked" );
-                viws = (TextView) findViewById(R.id.Question);
                 fStore = FirebaseFirestore.getInstance();
                 FirebaseAuth mFAuth = FirebaseAuth.getInstance();
                 String userID = mFAuth.getCurrentUser().getUid();
-                //viws.setText(userID + "You said Yes");
-                if(userID!=null) {
-                    DocumentReference documentReference = fStore.collection("users").document(userID);
-                    Log.d(TAG, "Data ready to be put " );
-                    Map<String,Object> user = new HashMap<>();
-                    user.put("Person1Long",longi);
-                    user.put("Person1Lat",lati);
-                    documentReference.set(user,SetOptions.merge());
-                }
-                else{
-                    Log.d(TAG, "DocumentSnapshot data is here: ");
-                }
+                DocumentReference documentReference = fStore.collection("users").document(userID);
+                Log.d(TAG, "Data ready to be put " );
+                Map<String,Object> user = new HashMap<>();
+                user.put("Person1Long",longi);
+                user.put("Person1Lat",lati);
+                documentReference.set(user,SetOptions.merge());
 
                 startActivity(new Intent(getApplicationContext(),MapsActivity.class));
             }
@@ -80,7 +96,6 @@ public class GenderReveal extends Activity implements LocationListener {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viws = (TextView) findViewById(R.id.Question);
                 fStore = FirebaseFirestore.getInstance();
                 FirebaseAuth mFAuth = FirebaseAuth.getInstance();
                 String userID = mFAuth.getCurrentUser().getUid();
@@ -92,22 +107,19 @@ public class GenderReveal extends Activity implements LocationListener {
 
                 documentReference.set(user, SetOptions.merge());
                 startActivity(new Intent(getApplicationContext(),MapsActivity.class));
+
+                startActivity(new Intent(getApplicationContext(),MapsActivity.class));
             }
         });
 
     }
 
-    public void Loccc(Location location){
-        lati = location.getLongitude();
-        longi = location.getLongitude();
-
-    }
 
     @Override
     public void onLocationChanged(Location location) {
         lati = location.getLatitude();
         longi =  location.getLongitude();
-        Log.d(TAG, "Location found " );
+        Log.d(TAG, "Location found " +lati+ " "+ longi);
     }
 
     @Override
