@@ -107,8 +107,6 @@ public class GenderReveal extends Activity implements LocationListener {
 
                 documentReference.set(user, SetOptions.merge());
                 startActivity(new Intent(getApplicationContext(),MapsActivity.class));
-
-                startActivity(new Intent(getApplicationContext(),MapsActivity.class));
             }
         });
 
